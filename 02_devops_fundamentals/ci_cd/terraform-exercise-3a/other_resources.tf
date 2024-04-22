@@ -40,7 +40,7 @@ resource "aws_iam_policy" "lambda_policy" {
         Action = [
           "s3:*",
         ]
-        Resource = ["*"]
+        Resource = [data.aws_s3_bucket.ctw03643-files.arn]
       }
     ]
   })
