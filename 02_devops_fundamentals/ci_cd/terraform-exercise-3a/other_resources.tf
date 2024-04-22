@@ -34,7 +34,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "ec2:DescribeNetworkInterfaces",
           "ec2:DeleteNetworkInterface"
         ]
-        Resource = ["*"]
+        Resource = [data.aws_s3_bucket.ctw03643-files.arn]
       }, {
         Effect = "Allow"
         Action = [
