@@ -25,7 +25,7 @@ module "lambda" {
   #TODO complete module
 }
 
-resource "aws_s3_bucket" "bucket03643" {
+resource "aws_s3_bucket" "ctw03643-files" {
   bucket = "${var.project_name}-${var.identifier}"
 }
 
@@ -39,7 +39,7 @@ resource "aws_iam_policy" "lambda_policy" {
         Action = [
           "s3:*",
         ]
-        Resource = [data.aws_s3_bucket.bucket03643.arn]
+        Resource = [data.aws_s3_bucket.ctw03643-files.arn]
       }
     ]
   })
