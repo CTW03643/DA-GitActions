@@ -9,6 +9,8 @@ env:
   DAY_OF_WEEK: 2a
   MY_USERNAME: ${{ github.actor }}
   DIRECTORY: 02_devops_fundamentals/ci_cd/terraform-exercise-3a
+  REQUIREMENTS: 02_devops_fundamentals/ci_cd/terraform-exercise-3a/unittests/requirements.txt
+  TESTDIR: 02_devops_fundamentals/ci_cd/terraform-exercise-3a/unittests
   $FAIL: true 
 
 jobs:
@@ -42,13 +44,36 @@ jobs:
           directory: $DIRECTORY
           soft-fail: $FAIL
 
-      #- name: Run Checkov
-      #  run: checkov -d $DIRECTORY --soft-fail
+      - name: Run Checkov
+        run: checkov -d $DIRECTORY --soft-fail
 
         env:
           ACADEMY_TYPE: Data
           MY_NAME: Rafa
           WEEKDAY: Monday 
+
+  pytest:
+    runs-on: self-hosted
+    needs: checkov
+    
+    strategy:
+      matrix:
+        python-version: [3.10]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install -r $REQUIREMENTS  # Adjust according to your project setup
+
+      - name: Run Pytest
+        run: pytest -d $TESTDIR
 
 
 
