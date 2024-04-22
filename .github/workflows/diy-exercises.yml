@@ -32,13 +32,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Checkov
-        run: pip install checkov
+      - name: Checkov GitHub Action
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          # This will add both a CLI output to the console and create a results.sarif file
+          output_format: cli,sarif
+          output_file_path: console,teste/results.sarif
 
       - name: Run Checkov
-        run: checkov -d $DIRECTORY
+        run: checkov -d $DIRECTORY --soft-fail
 
-      
         env:
           ACADEMY_TYPE: Data
           MY_NAME: Rafaecho "6362646b67613c6981db76f4d25e68e463a9af2cc8d16e31bfeabe39153606a0  actions-runner-linux-x64-2.315.0.tar.gz" | shasum -a 256 -c
