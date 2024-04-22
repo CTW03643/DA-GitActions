@@ -28,9 +28,7 @@ jobs:
 
   checkov:
     runs-on: self-hosted
-    needs: greeting_job
-    env:
-      GREETING: hello
+    # needs: greeting_job
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -38,19 +36,8 @@ jobs:
       - name: Checkov GitHub Action
         uses: bridgecrewio/checkov-action@v12
         with:
-          # This will add both a CLI output to the console and create a results.sarif file
-          output_format: cli,sarif
-          output_file_path: test/console,results.sarif
-          directory: $DIRECTORY
-          soft-fail: $FAIL
-
-      - name: Run Checkov
-        run: checkov -d $DIRECTORY --soft-fail
-
-        env:
-          ACADEMY_TYPE: Data
-          MY_NAME: Rafa
-          WEEKDAY: Monday 
+          directory: terraform/terraform-exercise-3a
+          soft_fail: true
 
   pytest:
     runs-on: self-hosted
