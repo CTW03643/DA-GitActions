@@ -43,9 +43,7 @@ jobs:
         run: pip install checkov
 
       - name: Run Checkov
-        run: checkov -d $DIRECTORY
-          with:
-            soft_fail: true
+        run: checkov -d $DIRECTORY --soft-fail
   pytest:
     runs-on: self-hosted
     #needs: checkov
