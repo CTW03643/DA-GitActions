@@ -33,19 +33,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Checkov GitHub Action
-        uses: bridgecrewio/checkov-action@v12
-        with:
-          directory: terraform/terraform-exercise-3a
-          soft_fail: true
+      #- name: Checkov GitHub Action
+       # uses: bridgecrewio/checkov-action@v12
+        #with:
+         # directory: terraform/terraform-exercise-3a
+          #soft_fail: true
 
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Run Checkov
+        run: checkov -d $DIRECTORY
+          with:
+            soft_fail: true
   pytest:
     runs-on: self-hosted
     #needs: checkov
     
     strategy:
       matrix:
-        python-version: [3.10]
+        python-version: [3.12.3]
 
     steps:
       - name: Checkout code
