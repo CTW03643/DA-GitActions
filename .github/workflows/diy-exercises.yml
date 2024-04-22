@@ -65,7 +65,7 @@ jobs:
       #  run: pip install -r $REQUIREMENTS  # Adjust according to your project setup
 
       - name: Run Pytest
-        run: pytest -d $TESTDIR
+        run: pytest $TESTDIR
 
 
 
