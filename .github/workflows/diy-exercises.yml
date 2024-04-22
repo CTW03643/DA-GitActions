@@ -8,6 +8,7 @@ on:
 env:
   DAY_OF_WEEK: 2a
   MY_USERNAME: ${{ github.actor }}
+  DIRECTORY: 02_devops_fundamentals/ci_cd/terraform-exercise-3a
 
 jobs:
   greeting_job:
@@ -22,18 +23,27 @@ jobs:
           MY_NAME: Rafaecho "6362646b67613c6981db76f4d25e68e463a9af2cc8d16e31bfeabe39153606a0  actions-runner-linux-x64-2.315.0.tar.gz" | shasum -a 256 -c
           WEEKDAY: Monday 
 
-  week_job:
+  checkov:
     runs-on: self-hosted
     needs: greeting_job
     env:
       GREETING: hello
     steps:
-      - name: "Say 'Hello Data Academy 7th edition, this is $WEEKDAY 's first exercise! I'm  $MY_USERNAME !'"
-        run: echo "$GREETING $ACADEMY_TYPE Academy 7th edition, this is $DAY_OF_WEEK's first exercise!"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Run Checkov
+        run: checkov -d $DIRECTORY
+
+      
         env:
           ACADEMY_TYPE: Data
           MY_NAME: Rafaecho "6362646b67613c6981db76f4d25e68e463a9af2cc8d16e31bfeabe39153606a0  actions-runner-linux-x64-2.315.0.tar.gz" | shasum -a 256 -c
           WEEKDAY: Monday 
+
 
 
 
