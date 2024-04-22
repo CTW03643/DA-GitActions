@@ -54,7 +54,7 @@ jobs:
 
   pytest:
     runs-on: self-hosted
-    needs: checkov
+    #needs: checkov
     
     strategy:
       matrix:
